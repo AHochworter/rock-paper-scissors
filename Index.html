@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Rock Paper Scissors</title>
+  </head>
+  <body>
+    <section class="left-column">
+      <div class="user-human">
+        <h2 <span class="player-emoji">🤠</span></h2>
+        <p>Human</p>
+        <p class="score-human">Wins:</p>
+        <button class="change-game-btn">Change Game?</button>
+      </div>
+    </section>
+    <main class="main-center">
+      <h1>Rock, Paper, Scissors</h1>
+      <h3 class="tagline">Choose your game!</h3>
+      <!-- how to change this to Choose your fighter!? -->
+      <div class="battle-ground">
+        <img src="assets/rock.png" alt="Rock" class="game-fighter hidden" />
+        <img
+        src="assets/lines-paper.png"
+        alt="Paper"
+        class="game-fighter hidden"
+        />
+        <img
+          src="assets/happy-scissors.png"
+          alt="Scissors"
+          class="game-fighter hidden"
+          />
+          <img
+          src="assets/cowboy-hat.png"
+          alt="Cowboy Hat"
+          class="game-fighter hidden"
+          />
+          <img
+          src="assets/cowboy-boots.png"
+          alt="Cowboy Boots"
+          class="game-fighter hidden"
+          />
+      </div>
+      <button class="choose-classic">CLASSIC
+        <p>ROCK > SCISSORS</p>
+        <p>PAPER > ROCK</p>
+        <p>SCISSORS > PAPER</p>
+      </button>
+      <button class="choose-difficult">DIFFICULT
+        <p>ROCK > SCISSORS & COWBOY HAT</p>
+        <p>PAPER > ROCK & COWBOY BOOTS</p>
+        <p>SCISSORS > PAPER & COWBOY BOOTS</p>
+        <p>COWBOY HAT > ROCK & PAPER</p>
+        <p>COWBOY BOOTS > ROCK & PAPER</p>
+      </button>
+    </main>
+    <section class="right-column">
+      <div class="user-cpu">
+        <h2 <span class="player-emoji">💻</span></h2>
+        <p>Computer</p>
+        <p class="score-cpu">Wins:</p>
+      </div>
+    </section>
+  </body>
+  <script src="script.js"></script>
+</html>

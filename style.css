@@ -1,0 +1,86 @@
+html {
+  height: 100vh;
+}
+
+body {
+  display: flex;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1em;
+  background-color: #e7f1f1;
+  height: 100vh;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  background-image: linear-gradient(#134d71, #f7e4bf);
+  width: 900px;
+}
+
+h1 {
+  display: flex;
+  justify-content: center;
+  color: white;
+  font-size: 65px;
+}
+
+h2 {
+  font-size: 3.5em;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 0px 0px 0px;
+}
+
+.left-column,
+.right-column {
+  display: flex;
+  justify-content: center;
+  width: 20%;
+  background-image: linear-gradient(#f7e4bf, #134d71);
+}
+
+.user-cpu,
+.user-human {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100px;
+  margin: 30px 0px 0px 0px;
+}
+
+.battle-ground {
+  display: flex;
+  justify-content: center;
+  margin: 50px 10px 0px 10px;
+}
+
+.tagline {
+  display: flex;
+  font-size: 1.75em;
+  justify-content: center;
+  color: white;
+}
+
+.game-fighter {
+  height: 100px;
+  width: 100px;
+  margin: 0px 6px 6px 0px;
+}
+
+/* .hidden {
+  display: none;
+} */
+
+/* img.emojione {
+  margin: 0px;
+  display: inline;
+} */
+
+/* span.player-emoji {
+  margin: 0px;
+  display: inline;
+  font-size: 30px;
+  vertical-align: middle;
+  line-height: 2;
+} */
