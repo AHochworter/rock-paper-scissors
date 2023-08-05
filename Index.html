@@ -12,61 +12,65 @@
     <title>Rock Paper Scissors</title>
   </head>
   <body>
-    <section class="left-column">
+    <aside class="left-aside">
       <div class="user-human">
-        <h2 <span class="player-emoji">🤠</span></h2>
+        <h2><span class="player-emoji"></span></h2>
         <p>Human</p>
-        <p class="score-human">Wins:</p>
+        <p class="show-score" id="humanWon">Wins:</p>
         <button class="change-game-btn">Change Game?</button>
       </div>
-    </section>
+    </aside>
     <main class="main-center">
       <h1>Rock, Paper, Scissors</h1>
       <h3 class="tagline">Choose your game!</h3>
       <!-- how to change this to Choose your fighter!? -->
       <div class="battle-ground">
-        <img src="assets/rock.png" alt="Rock" class="game-fighter hidden" />
+        <img src="assets/rock.png" alt="Rock" class="game-fighter hidden" id="rock" />
         <img
         src="assets/lines-paper.png"
         alt="Paper"
-        class="game-fighter hidden"
+        class="game-fighter hidden" id="paper"
         />
         <img
           src="assets/happy-scissors.png"
           alt="Scissors"
-          class="game-fighter hidden"
+          class="game-fighter hidden" id="scissors"
           />
           <img
           src="assets/cowboy-hat.png"
           alt="Cowboy Hat"
-          class="game-fighter hidden"
+          class="game-fighter hidden" id="cowboyHat"
           />
           <img
           src="assets/cowboy-boots.png"
           alt="Cowboy Boots"
-          class="game-fighter hidden"
+          class="game-fighter hidden" id="cowboyBoots"
           />
       </div>
-      <button class="choose-classic">CLASSIC
-        <p>ROCK > SCISSORS</p>
-        <p>PAPER > ROCK</p>
-        <p>SCISSORS > PAPER</p>
-      </button>
-      <button class="choose-difficult">DIFFICULT
-        <p>ROCK > SCISSORS & COWBOY HAT</p>
-        <p>PAPER > ROCK & COWBOY BOOTS</p>
-        <p>SCISSORS > PAPER & COWBOY BOOTS</p>
-        <p>COWBOY HAT > ROCK & PAPER</p>
-        <p>COWBOY BOOTS > ROCK & PAPER</p>
-      </button>
+      <button class="choose-classic-btn">CLASSIC</button>
+    <div class="rules-classic"
+      <h4 class="rules-title">RULES FOR CLASSIC GAME</h3>
+      <p>ROCK > SCISSORS</p>
+      <p>PAPER > ROCK</p>
+      <p>SCISSORS > PAPER</p>
+    </div>
+    <button class="choose-difficult-btn">DIFFICULT</button>
+    <div class="rules-difficult"
+      <h4 class="rules-title">RULES FOR DIFFICULT GAME</h3>
+      <p>ROCK > SCISSORS & COWBOY HAT</p>
+      <p>PAPER > ROCK & COWBOY BOOTS</p>
+      <p>SCISSORS > PAPER & COWBOY BOOTS</p>
+      <p>COWBOY HAT > ROCK & PAPER</p>
+      <p>COWBOY BOOTS > ROCK & PAPER</p>
+    </div>
     </main>
-    <section class="right-column">
+    <aside class="right-aside">
       <div class="user-cpu">
-        <h2 <span class="player-emoji">💻</span></h2>
+        <h2><span class="player-emoji"></span></h2>
         <p>Computer</p>
-        <p class="score-cpu">Wins:</p>
+        <p class="show-score" id="cpuWon">Wins:</p>
       </div>
-    </section>
+    </aside>
   </body>
-  <script src="script.js"></script>
+  <script src="main.js"></script>
 </html>
