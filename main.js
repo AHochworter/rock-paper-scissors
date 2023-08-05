@@ -8,24 +8,22 @@ var rulesClassic = document.querySelector('.rules-classic');
 var rulesDifficult = document.querySelector('.rules-difficult');
 var tagline = document.querySelector('.tagline');
 var battleGround = document.querySelector('.battle-ground');
+var humanScore = document.querySelector('#humanWon');
+var cpuScore = document.querySelector('#cpuWon');
 
 // Emojis & Fighter Icons
 var gameFighters = document.querySelectorAll('.game-fighter');
 
-var rock = document.querySelector('#rock');
-var paper = document.querySelector('#paper');
-var scissors = document.querySelector('#scissors');
-var cowboyHat = document.querySelector('#cowboyHat');
-var cowboyBoots = document.querySelector('#cowboyBoots');
-
 // Buttons
 var chooseClassicBtn = document.querySelector('.choose-classic-btn');
 var chooseDifficultBtn = document.querySelector('.choose-difficult-btn');
+var changeGameBtn = document.querySelector('.change-game-btn');
 
 // Event Listeners👇
 chooseClassicBtn.addEventListener('click', loadClassic);
 chooseDifficultBtn.addEventListener('click', loadDifficult);
 battleGround.addEventListener('click', takeTurn);
+changeGameBtn.addEventListener('click', changeGame);
 
 // Global Variables👇
 var gameState;
@@ -34,6 +32,7 @@ var mainViewElements = [
   chooseDifficultBtn,
   rulesClassic,
   rulesDifficult,
+  changeGameBtn,
 ];
 
 // Event Handlers and Functions👇
@@ -92,11 +91,13 @@ function loadClassic() {
       classicFighters.push(gameState.fighters[i]);
     }
   }
-  //   console.log('classicFighters', classicFighters);
+  // instead of using return here, assign classicFighters to the key:value pair for currentVersionFighters
   gameState.currentVersionFighters = classicFighters;
-
+  // update tagline to read "Choose Your Fighter"
   tagline.innerText = 'Choose Your Fighter!';
+  // toggle classList hidden for elements on the main view
   toggleClass(mainViewElements);
+  // display the fighters based on the gameState.currentVersionFighters
   displayFighters();
 }
 
@@ -109,7 +110,7 @@ function loadDifficult() {
       difficultFighters.push(gameState.fighters[i]);
     }
   }
-  console.log('difficultFighters', difficultFighters);
+
   gameState.currentVersionFighters = difficultFighters;
 
   tagline.innerText = 'Choose Your Fighter!';
@@ -132,26 +133,15 @@ function takeTurn(event) {
   gameState.player2.fighter = randomFighter(gameState.currentVersionFighters);
   console.log('cpu Selected:', gameState.player2.fighter);
 
-  isDraw(gameState.player1.fighter, gameState.player2.fighter.name);
-  console.log(getWinner(gameState.player1.fighter, gameState.player2.fighter));
+  if (gameState.player1.fighter === gameState.player2.fighter.name) {
+    tagline.innerText = "It's a Draw!";
+  }
+  getWinner();
 }
 
 function randomFighter(array) {
   var randomIndex = Math.floor(Math.random() * array.length);
   return array[randomIndex];
-}
-
-function isDraw() {
-  if (gameState.player1.fighter === gameState.player2.fighter.name) {
-    console.log(
-      'player1.wins',
-      gameState.player1.wins,
-      'player2.wins',
-      gameState.player2.wins
-    );
-    tagline.innerText = "It's a Draw!";
-  }
-  getWinner();
 }
 
 function getWinner() {
@@ -163,7 +153,8 @@ function getWinner() {
     (gameState.player1.fighter === 'scissors' &&
       gameState.player2.fighter.name === 'paper')
   ) {
-    gameState.player1.wins++;
+    gameState.player1.wins = gameState.player1.wins + 1;
+    humanScore.innerText = gameState.player1.wins;
     console.log('gameState.player1.wins', gameState.player1.wins);
     tagline.innerText = 'Human wins!';
   } else if (
@@ -175,11 +166,36 @@ function getWinner() {
       gameState.player2.fighter.name === 'rock')
   ) {
     //update winner's score
-    gameState.player2.wins++;
+    gameState.player2.wins = gameState.player2.wins + 1;
+    cpuScore.innerText = gameState.player2.wins;
     console.log('gameState.player2.wins', gameState.player2.wins);
     //update the DOM - playerInfo
     tagline.innerHTML = 'Computer Wins!';
   }
+  displayFightResults();
+}
+
+function displayFightResults() {
+  displayFighters();
+  var humanFighter = document.getElementById(gameState.player1.fighter);
+  var cpuFighter = document.getElementById(gameState.player2.fighter.name);
+
+  humanFighter.classList.remove('hidden');
+  cpuFighter.classList.remove('hidden');
+
+  setTimeout(() => {
+    humanFighter.classList.add('hidden');
+    cpuFighter.classList.add('hidden');
+    displayFighters();
+    tagline.innerText = 'Choose Your Fighter!';
+    //set all fighters to visible
+  }, 4500);
+}
+
+function changeGame() {
+  console.log('Change Game was Clicked');
+  toggleClass(mainViewElements);
+  displayFighters();
 }
 
 // Helper functions
