@@ -91,11 +91,13 @@ function loadClassic() {
       classicFighters.push(gameState.fighters[i]);
     }
   }
-  //   console.log('classicFighters', classicFighters);
+  // instead of using return here, assign classicFighters to the key:value pair for currentVersionFighters
   gameState.currentVersionFighters = classicFighters;
-
+  // update tagline to read "Choose Your Fighter"
   tagline.innerText = 'Choose Your Fighter!';
+  // toggle classList hidden for elements on the main view
   toggleClass(mainViewElements);
+  // display the fighters based on the gameState.currentVersionFighters
   displayFighters();
 }
 
@@ -108,7 +110,7 @@ function loadDifficult() {
       difficultFighters.push(gameState.fighters[i]);
     }
   }
-  console.log('difficultFighters', difficultFighters);
+
   gameState.currentVersionFighters = difficultFighters;
 
   tagline.innerText = 'Choose Your Fighter!';
