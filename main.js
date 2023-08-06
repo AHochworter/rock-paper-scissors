@@ -27,6 +27,7 @@ changeGameBtn.addEventListener('click', changeGame);
 
 // Global Variables👇
 var gameState;
+var takeTurnTimeOut;
 var mainViewElements = [
   chooseClassicBtn,
   chooseDifficultBtn,
@@ -52,11 +53,11 @@ function createGame(gameChoice) {
     player1: createPlayer('Human', '🤠', 0),
     player2: createPlayer('CPU', '💻', 0),
     fighters: [
-      { name: 'rock', classic: true, difficult: true },
-      { name: 'paper', classic: true, difficult: true },
-      { name: 'scissors', classic: true, difficult: true },
-      { name: 'cowboyHat', classic: false, difficult: true },
-      { name: 'cowboyBoots', classic: false, difficult: true },
+      { id: 'rock', classic: true, difficult: true },
+      { id: 'paper', classic: true, difficult: true },
+      { id: 'scissors', classic: true, difficult: true },
+      { id: 'cowboyHat', classic: false, difficult: true },
+      { id: 'cowboyBoots', classic: false, difficult: true },
     ],
     version: gameChoice,
     currentVersionFighters: [],
@@ -118,25 +119,28 @@ function loadDifficult() {
   displayFighters();
 }
 
-function displayFighters() {
-  for (var i = 0; i < gameState.currentVersionFighters.length; i++) {
-    toggleClass([gameFighters[i]]);
-  }
-}
-
 function takeTurn(event) {
   // on click - save fighter name that user selected
   gameState.player1.fighter = event.target.id;
   console.log('Human Selected:', gameState.player1.fighter);
-
   // random generate the cpu's fighter - check rubric - need a separate function?
   gameState.player2.fighter = randomFighter(gameState.currentVersionFighters);
   console.log('cpu Selected:', gameState.player2.fighter);
 
-  if (gameState.player1.fighter === gameState.player2.fighter.name) {
+  if (gameState.player1.fighter === gameState.player2.fighter.id) {
     tagline.innerText = "It's a Draw!";
+    //no points!
+    displayFightResults();
+    //reset icons
+  } else {
+    console.log(
+      'Human Fighter',
+      gameState.player1.fighter,
+      'cpu Fighter',
+      gameState.player2.fighter.id
+    );
+    getWinner();
   }
-  getWinner();
 }
 
 function randomFighter(array) {
@@ -147,24 +151,31 @@ function randomFighter(array) {
 function getWinner() {
   if (
     (gameState.player1.fighter === 'rock' &&
-      gameState.player2.fighter.name === 'scissors') ||
+      gameState.player2.fighter.id === 'scissors') || //End rock
+    (gameState.player1.fighter === 'rock' &&
+      gameState.player2.fighter.id === 'cowboyBoots') ||
     (gameState.player1.fighter === 'paper' &&
-      gameState.player2.fighter.name === 'rock') ||
+      gameState.player2.fighter.id === 'rock') || //End paper
+    (gameState.player1.fighter === 'paper' &&
+      gameState.player2.fighter.id === 'cowboyHat') ||
     (gameState.player1.fighter === 'scissors' &&
-      gameState.player2.fighter.name === 'paper')
+      gameState.player2.fighter.id === 'paper') ||
+    (gameState.player1.fighter === 'scissors' &&
+      gameState.player2.fighter.id === 'cowboyBoots') ||
+    (gameState.player1.fighter === 'cowboyBoots' &&
+      gameState.player2.fighter.id === 'paper') ||
+    (gameState.player1.fighter === 'cowboyBoots' &&
+      gameState.player2.fighter.id === 'cowboyHat') ||
+    (gameState.player1.fighter === 'cowboyHat' &&
+      gameState.player2.fighter.id === 'scissors') ||
+    (gameState.player1.fighter === 'cowboyHat' &&
+      gameState.player2.fighter.id === 'rock')
   ) {
     gameState.player1.wins = gameState.player1.wins + 1;
     humanScore.innerText = gameState.player1.wins;
     console.log('gameState.player1.wins', gameState.player1.wins);
     tagline.innerText = 'Human wins!';
-  } else if (
-    (gameState.player1.fighter === 'rock' &&
-      gameState.player2.fighter.name === 'paper') ||
-    (gameState.player1.fighter === 'paper' &&
-      gameState.player2.fighter.name === 'scissors') ||
-    (gameState.player1.fighter === 'scissors' &&
-      gameState.player2.fighter.name === 'rock')
-  ) {
+  } else {
     //update winner's score
     gameState.player2.wins = gameState.player2.wins + 1;
     cpuScore.innerText = gameState.player2.wins;
@@ -176,26 +187,54 @@ function getWinner() {
 }
 
 function displayFightResults() {
-  displayFighters();
   var humanFighter = document.getElementById(gameState.player1.fighter);
-  var cpuFighter = document.getElementById(gameState.player2.fighter.name);
+  var cpuFighter = document.getElementById(gameState.player2.fighter.id);
 
-  humanFighter.classList.remove('hidden');
-  cpuFighter.classList.remove('hidden');
+  humanFighter.classList.add('hidden');
+  cpuFighter.classList.add('hidden');
 
-  setTimeout(() => {
-    humanFighter.classList.add('hidden');
-    cpuFighter.classList.add('hidden');
-    displayFighters();
+  var newHTML = `
+    <div class="display-fight-results">
+      <div class="fighter-container">
+        <img src="assets/${humanFighter.id}.png" alt="${humanFighter.id}" class="game-fighter" />
+      </div>
+      <div class="fighter-container">
+        <img src="assets/${cpuFighter.id}.png" alt="${cpuFighter.id}" class="game-fighter" />
+      </div>
+    </div>
+  `;
+
+  battleGround.innerHTML = newHTML;
+
+  takeTurnTimeOut = setTimeout(() => {
     tagline.innerText = 'Choose Your Fighter!';
-    //set all fighters to visible
-  }, 4500);
+
+    // Reset the battle to show fighters and clear results
+    resetBattle();
+  }, 6000);
 }
+
+// function showClassicFighters() {
+//   for (var i = 0; i < gameState.currentVersionFighters.length; i++) {
+//     var fighterId = gameState.currentVersionFighters[i].id;
+//     var fighterElement = document.getElementById(fighterId);
+
+//     if (fighterElement) {
+//       fighterElement.classList.remove('hidden');
+//     }
+//   }
+// }
 
 function changeGame() {
   console.log('Change Game was Clicked');
+  //turns off the timer
+  clearTimeout(takeTurnTimeOut);
+  //updates the tagline
+  tagline.innerText = 'Choose Your Game!';
+  //turns the main view back on
   toggleClass(mainViewElements);
-  displayFighters();
+  //hides all the fighter icons
+  hideFighters();
 }
 
 // Helper functions
@@ -205,4 +244,27 @@ function toggleClass(elements) {
   for (var i = 0; i < elements.length; i++) {
     elements[i].classList.toggle('hidden');
   }
+}
+
+function displayFighters() {
+  for (var i = 0; i < gameState.currentVersionFighters.length; i++) {
+    toggleClass([gameFighters[i]]);
+  }
+}
+
+function hideFighters() {
+  for (var i = 0; i < gameFighters.length; i++) {
+    gameFighters[i].classList.add('hidden');
+  }
+}
+
+function showFighters() {
+  for (var i = 0; i < gameState.currentVersionFighters.length; i++) {
+    toggleClass([gameFighters[i]]);
+  }
+}
+
+function resetBattle() {
+  showFighters(); // Show all fighters
+  battleGround.innerHTML = ''; // Clear battle results
 }
