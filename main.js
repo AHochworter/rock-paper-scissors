@@ -232,7 +232,7 @@ function changeGame() {
   hideFighters();
 }
 
-// Helper functions
+// Helper functions👇
 
 //toggle 'hidden' classList function
 function toggleClass(elements) {
@@ -241,20 +241,16 @@ function toggleClass(elements) {
   }
 }
 
+//toggle 'hidden' on the fighters
 function displayFighters() {
   for (var i = 0; i < gameState.currentVersionFighters.length; i++) {
     toggleClass([gameFighters[i]]);
   }
 }
 
+// hide fighters!
 function hideFighters() {
   for (var i = 0; i < gameFighters.length; i++) {
     gameFighters[i].classList.add('hidden');
-  }
-}
-
-function showFighters() {
-  for (var i = 0; i < gameFighters.length; i++) {
-    gameFighters[i].classList.remove('hidden');
   }
 }
