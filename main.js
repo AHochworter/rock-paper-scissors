@@ -217,7 +217,7 @@ function displayFightResults() {
     gameFighters = document.querySelectorAll('.game-fighter');
 
     tagline.innerText = 'Choose Your Fighter!';
-  }, 4000);
+  }, 3000);
 }
 
 function changeGame() {
