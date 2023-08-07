@@ -34,7 +34,9 @@ var mainViewElements = [
   rulesClassic,
   rulesDifficult,
   changeGameBtn,
+  battleGround,
 ];
+var battleGroundStatus;
 
 // Event Handlers and Functions👇
 
@@ -100,6 +102,7 @@ function loadClassic() {
   toggleClass(mainViewElements);
   // display the fighters based on the gameState.currentVersionFighters
   displayFighters();
+  console.log({ gameState });
 }
 
 function loadDifficult() {
@@ -190,9 +193,12 @@ function displayFightResults() {
   var humanFighter = document.getElementById(gameState.player1.fighter);
   var cpuFighter = document.getElementById(gameState.player2.fighter.id);
 
-  humanFighter.classList.add('hidden');
-  cpuFighter.classList.add('hidden');
+  humanFighter.classList.remove('hidden');
+  cpuFighter.classList.remove('hidden');
 
+  battleGroundStatus = battleGround.innerHTML;
+
+  // Construct the innerHTML content
   var newHTML = `
     <div class="display-fight-results">
       <div class="fighter-container">
@@ -207,23 +213,12 @@ function displayFightResults() {
   battleGround.innerHTML = newHTML;
 
   takeTurnTimeOut = setTimeout(() => {
+    battleGround.innerHTML = battleGroundStatus;
+    gameFighters = document.querySelectorAll('.game-fighter');
+
     tagline.innerText = 'Choose Your Fighter!';
-
-    // Reset the battle to show fighters and clear results
-    resetBattle();
-  }, 6000);
+  }, 4000);
 }
-
-// function showClassicFighters() {
-//   for (var i = 0; i < gameState.currentVersionFighters.length; i++) {
-//     var fighterId = gameState.currentVersionFighters[i].id;
-//     var fighterElement = document.getElementById(fighterId);
-
-//     if (fighterElement) {
-//       fighterElement.classList.remove('hidden');
-//     }
-//   }
-// }
 
 function changeGame() {
   console.log('Change Game was Clicked');
@@ -232,8 +227,8 @@ function changeGame() {
   //updates the tagline
   tagline.innerText = 'Choose Your Game!';
   //turns the main view back on
+  // hideFighters();
   toggleClass(mainViewElements);
-  //hides all the fighter icons
   hideFighters();
 }
 
@@ -259,12 +254,7 @@ function hideFighters() {
 }
 
 function showFighters() {
-  for (var i = 0; i < gameState.currentVersionFighters.length; i++) {
-    toggleClass([gameFighters[i]]);
+  for (var i = 0; i < gameFighters.length; i++) {
+    gameFighters[i].classList.remove('hidden');
   }
-}
-
-function resetBattle() {
-  showFighters(); // Show all fighters
-  battleGround.innerHTML = ''; // Clear battle results
 }
