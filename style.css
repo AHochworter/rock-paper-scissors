@@ -59,6 +59,7 @@ p {
 
 .battle-ground {
   display: flex;
+  width: 500px;
   justify-content: center;
   margin: 50px 10px 0px 10px;
 }
@@ -104,6 +105,16 @@ p {
   border-radius: 1px 50px;
   font-variant: common-ligatures;
   border: none;
+}
+/* innerHTML to display the fight results */
+.fighter-container {
+  display: flex;
+  flex-direction: row;
+  width: 300px;
+  justify-content: space-between;
+  background-color: aquamarine;
+  border-style: double;
+  border-color: chartreuse;
 }
 
 .hidden {
