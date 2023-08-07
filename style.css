@@ -4,7 +4,7 @@ html {
 
 body {
   display: flex;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins' sans serif;
   font-size: 1em;
   background-color: #e7f1f1;
   height: 100vh;
@@ -16,15 +16,17 @@ main {
   justify-content: center;
   align-items: center;
   background-image: linear-gradient(#9744be, #f7e4bf);
-  width: 900px;
+  width: 60%;
 }
 
 h1 {
   display: flex;
   justify-content: center;
+  text-shadow: 2px 3px black;
   align-items: center;
   color: white;
   font-size: 65px;
+  margin: 150px 0px 45px 0px;
 }
 
 h2 {
@@ -34,17 +36,62 @@ h2 {
   margin: 0px 0px 0px 0px;
 }
 
-p {
-  font-size: 1em;
-  line-height: 0.8;
+h4 {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 5px 0px 8px 0px;
+  text-shadow: 2px 3px black;
+}
+
+img.emojione {
+  margin: 0px;
+  display: inline;
+}
+
+span.player-emoji {
+  margin: 0px;
+  display: inline;
+  font-size: 75px;
+  vertical-align: middle;
+  line-height: 2;
+}
+
+.rules {
+  font-size: 1.15em;
+  line-height: 0.5;
+}
+
+.show-score {
+  display: flex;
+  justify-content: center;
+  font-size: 2em;
+  width: 200px;
+  align-items: flex-start;
+}
+
+.human,
+.computer {
+  font-size: 2em;
+  margin: 15px 0px 15px 0px;
 }
 
 .left-aside,
 .right-aside {
   display: flex;
-  justify-content: center;
-  width: 20%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 22%;
   background-image: linear-gradient(#f7e4bf, #9744be);
+}
+
+.tagline {
+  display: flex;
+  padding: 10px;
+  font-size: 3em;
+  text-shadow: 2px 3px black;
+  justify-content: center;
+  color: white;
 }
 
 .user-cpu,
@@ -52,9 +99,18 @@ p {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  width: 100px;
-  margin: 30px 0px 0px 0px;
+  justify-content: center;
+  border-width: 6px;
+  border-color: greenyellow;
+  border-style: double;
+  border-radius: 8px 8px;
+  width: 250px;
+  height: 350px;
+  margin: 300px 0px 50px 0px;
+  box-shadow: rgba(44, 187, 99, 0.2) 0 -25px 18px -14px inset,
+    rgba(44, 187, 99, 0.15) 0 1px 2px, rgba(44, 187, 99, 0.15) 0 2px 4px,
+    rgba(44, 187, 99, 0.15) 0 4px 8px, rgba(44, 187, 99, 0.15) 0 8px 16px,
+    rgba(44, 187, 99, 0.15) 0 16px 32px;
 }
 
 .battle-ground {
@@ -62,23 +118,6 @@ p {
   width: 500px;
   justify-content: center;
   margin: 50px 10px 0px 10px;
-}
-
-.tagline {
-  display: flex;
-  font-size: 1.75em;
-  justify-content: center;
-  color: white;
-}
-
-.game-fighter {
-  height: 150px;
-  width: 150px;
-  margin: 0px 6px 6px 0px;
-}
-
-.rules-title {
-  font-size: 2em;
 }
 
 .rules-classic,
@@ -90,22 +129,54 @@ p {
   color: white;
   background-color: #9744be;
   width: 45%;
-  margin: 25px 0px 25px 0px;
+  margin: 15px 0px 150px 0px;
+  border-width: 2px;
+  border-color: greenyellow;
+  border-style: double;
+  border-radius: 8px 8px;
 }
 
 .choose-classic-btn,
-.choose-difficult-btn {
-  background-color: #ffffff;
-  color: #9744be;
-  font-family: 'Poppins', sans-serif;
-  width: 240px;
-  height: 45px;
-  font-size: 25px;
-  font-weight: 250;
-  border-radius: 1px 50px;
-  font-variant: common-ligatures;
-  border: none;
+.choose-difficult-btn,
+.change-game-btn {
+  background-color: #c2fbd7;
+  border-radius: 100px;
+  box-shadow: rgba(44, 187, 99, 0.2) 0 -25px 18px -14px inset,
+    rgba(44, 187, 99, 0.15) 0 1px 2px, rgba(44, 187, 99, 0.15) 0 2px 4px,
+    rgba(44, 187, 99, 0.15) 0 4px 8px, rgba(44, 187, 99, 0.15) 0 8px 16px,
+    rgba(44, 187, 99, 0.15) 0 16px 32px;
+  color: green;
+  cursor: pointer;
+  /* display: inline-block; */
+  /* font-family: CerebriSans-Regular, -apple-system, system-ui, Roboto, sans-serif; */
+  padding: 7px 20px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 250ms;
+  border: 0;
+  font-size: 24px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 }
+
+.choose-classic-btn:hover,
+.choose-difficult-btn:hover,
+.change-game-btn:hover {
+  box-shadow: rgba(44, 187, 99, 0.35) 0 -25px 18px -14px inset,
+    rgba(44, 187, 99, 0.25) 0 1px 2px, rgba(44, 187, 99, 0.25) 0 2px 4px,
+    rgba(44, 187, 99, 0.25) 0 4px 8px, rgba(44, 187, 99, 0.25) 0 8px 16px,
+    rgba(44, 187, 99, 0.25) 0 16px 32px;
+  transform: scale(1.05) rotate(-1deg);
+}
+
+.game-fighter {
+  height: 150px;
+  width: 150px;
+  margin: 0px 6px 6px 0px;
+  cursor: pointer;
+}
+
 /* innerHTML to display the fight results */
 .display-fight-results {
   display: flex;
@@ -121,24 +192,8 @@ p {
   width: 300px;
   align-items: center;
   justify-content: center;
-  /* background-color: aquamarine; */
-  border-style: double;
-  border-color: chartreuse;
 }
 
 .hidden {
   display: none;
-}
-
-img.emojione {
-  margin: 0px;
-  display: inline;
-}
-
-span.player-emoji {
-  margin: 0px;
-  display: inline;
-  font-size: 65px;
-  vertical-align: middle;
-  line-height: 2;
 }
