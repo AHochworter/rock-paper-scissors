@@ -15,7 +15,7 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-image: linear-gradient(#9744be, #f7e4bf);
+  background-image: linear-gradient(#895e1a, #f7e4bf);
   width: 60%;
 }
 
@@ -82,7 +82,7 @@ span.player-emoji {
   align-items: center;
   justify-content: flex-start;
   width: 22%;
-  background-image: linear-gradient(#f7e4bf, #9744be);
+  background-image: linear-gradient(#f7e4bf, #895e1a);
 }
 
 .tagline {
@@ -101,7 +101,7 @@ span.player-emoji {
   align-items: center;
   justify-content: center;
   border-width: 6px;
-  border-color: greenyellow;
+  border-color: #f9a602;
   border-style: double;
   border-radius: 8px 8px;
   width: 250px;
@@ -127,11 +127,11 @@ span.player-emoji {
   justify-content: center;
   align-items: center;
   color: white;
-  background-color: #9744be;
+  background-color: #804a00;
   width: 45%;
   margin: 15px 0px 150px 0px;
   border-width: 2px;
-  border-color: greenyellow;
+  border-color: #f9a602;
   border-style: double;
   border-radius: 8px 8px;
 }
@@ -139,13 +139,13 @@ span.player-emoji {
 .choose-classic-btn,
 .choose-difficult-btn,
 .change-game-btn {
-  background-color: #c2fbd7;
+  background-color: #f9a602;
   border-radius: 100px;
   box-shadow: rgba(44, 187, 99, 0.2) 0 -25px 18px -14px inset,
-    rgba(44, 187, 99, 0.15) 0 1px 2px, rgba(44, 187, 99, 0.15) 0 2px 4px,
+    rgba(218, 192, 41, 0.15) 0 1px 2px, rgba(44, 187, 99, 0.15) 0 2px 4px,
     rgba(44, 187, 99, 0.15) 0 4px 8px, rgba(44, 187, 99, 0.15) 0 8px 16px,
     rgba(44, 187, 99, 0.15) 0 16px 32px;
-  color: green;
+  color: #964000;
   cursor: pointer;
   /* display: inline-block; */
   /* font-family: CerebriSans-Regular, -apple-system, system-ui, Roboto, sans-serif; */
