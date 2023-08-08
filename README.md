@@ -2,7 +2,7 @@
 
 ### Abstract:
 
-Step into "Rock, Paper, Scissors: Wild West Showdown" – a fun twist on a classic game! Put on your cowboy hat and boots, and challenge our AI gunslinger to an epic duel. Outwit your Western rivals, as well as our witty AI, with strategic choices – rock, paper, or scissors. Keep it classic or add some spice. Experience thrilling matches, unexpected twists, and endless fun as you conquer the frontier. Download now and saddle up for the ultimate showdown against both human-like AI and Western fighters!
+Step into "Rock, Paper, Scissors: Wild West Showdown" – a fun twist on a classic game! Put on your cowboy hat and boots, and challenge our AI gunslinger to an epic duel. Outwit your Western rivals, as well as our witty AI, with strategic choices – rock, paper, or scissors. Keep it classic or add some spice. Experience thrilling matches, unexpected twists, and endless fun as you conquer the frontier. Saddle up for the ultimate showdown against both human-like AI and Western fighters!
 
 ### Installation Instructions:
 
