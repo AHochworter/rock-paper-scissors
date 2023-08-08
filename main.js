@@ -188,7 +188,7 @@ function displayFightResults() {
     battleGround.innerHTML = battleGroundStatus;
     gameFighters = document.querySelectorAll('.game-fighter');
     tagline.innerText = 'Choose Your Fighter!';
-  }, 3000);
+  }, 2000);
 }
 
 function changeGame() {
