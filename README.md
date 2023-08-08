@@ -14,6 +14,8 @@ Step into "Rock, Paper, Scissors: Wild West Showdown" – a fun twist on a class
 
 ### Preview of App:
 
+![](Rock-Paper-Scissors.gif)
+
 ### Context:
 
 This concluding individual project was assigned in the fifth week of module 1 at the Turing School of Software and Design. A timeframe of seven days was granted for the completion of this project. The project's objective was to begin from ground zero and develop an application enabling users to engage in a game of rock, paper, scissors against a computer opponent
