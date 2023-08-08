@@ -22,8 +22,14 @@ var changeGameBtn = document.querySelector('.change-game-btn');
 // Event Listeners👇
 chooseClassicBtn.addEventListener('click', loadClassic);
 chooseDifficultBtn.addEventListener('click', loadDifficult);
-battleGround.addEventListener('click', takeTurn);
 changeGameBtn.addEventListener('click', changeGame);
+battleGround.addEventListener('click', function (event) {
+  if (event.target.classList.contains('game-fighter')) {
+    gameState.player1.fighter = event.target.id;
+    console.log('human fighter', gameState.player1.fighter);
+    takeTurn();
+  }
+});
 
 // Global Variables👇
 var gameState;
@@ -78,113 +84,105 @@ function displayUserScores(gameState) {
   // Set innerHTML for player1 and player2
   // moved here to its own function - more modular, DRY?
   document.querySelector(
-    '.user-human .show-score'
-  ).innerHTML = `Wins: ${gameState.player1.wins}`;
+    '#humanWon'
+  ).textContent = `Wins: ${gameState.player1.wins}`;
   document.querySelector(
-    '.user-cpu .show-score'
-  ).innerHTML = `Wins: ${gameState.player2.wins}`;
+    '#cpuWon'
+  ).textContent = `Wins: ${gameState.player2.wins}`;
+}
+
+function getFightersByVersion(fighters, version) {
+  var choosenFighters = [];
+  for (var i = 0; i < fighters.length; i++) {
+    //use bracket notation here for version
+    if (fighters[i][version]) choosenFighters.push(fighters[i]);
+  }
+  return choosenFighters;
 }
 
 function loadClassic() {
-  //on click update gameState.version to equal 'classic'
+  console.log('Classic Button Clicked!');
   gameState.version = 'classic';
-  var classicFighters = [];
-  for (var i = 0; i < gameState.fighters.length; i++) {
-    if (gameState.fighters[i].classic) {
-      classicFighters.push(gameState.fighters[i]);
-    }
-  }
-  // instead of using return here, assign classicFighters to the key:value pair for currentVersionFighters
-  gameState.currentVersionFighters = classicFighters;
-  // update tagline to read "Choose Your Fighter"
+  gameState.currentVersionFighters = getFightersByVersion(
+    gameState.fighters,
+    gameState.version
+  );
+
   tagline.innerText = 'Choose Your Fighter!';
-  // toggle classList hidden for elements on the main view
   toggleClass(mainViewElements);
-  // display the fighters based on the gameState.currentVersionFighters
   displayFighters();
   console.log({ gameState });
 }
 
 function loadDifficult() {
-  //on click update game.State.version to equal 'difficult'
+  console.log('Difficult Button Clicked!');
   gameState.version = 'difficult';
-  var difficultFighters = [];
-  for (var i = 0; i < gameState.fighters.length; i++) {
-    if (gameState.fighters[i].difficult) {
-      difficultFighters.push(gameState.fighters[i]);
-    }
-  }
+  gameState.currentVersionFighters = getFightersByVersion(
+    gameState.fighters,
+    gameState.version
+  );
 
-  gameState.currentVersionFighters = difficultFighters;
-
-  tagline.innerText = 'Choose Your Fighter!';
+  tagline.innerHTML = 'Choose Your Fighter!';
   toggleClass(mainViewElements);
   displayFighters();
 }
 
-function takeTurn(event) {
-  // on click - save fighter name that user selected
-  gameState.player1.fighter = event.target.id;
-  console.log('Human Selected:', gameState.player1.fighter);
-  // random generate the cpu's fighter - check rubric - need a separate function?
-  gameState.player2.fighter = randomFighter(gameState.currentVersionFighters);
-  console.log('cpu Selected:', gameState.player2.fighter);
+//moved this to the event listener on battleGround
+// function userSelectedFighter(event) {
+//on click - save fighter name that the user selected
+//   gameState.player1.fighter = event.target.id;
+//   console.log('Human Selected', gameState.player1.fighter);
+// }
 
-  if (gameState.player1.fighter === gameState.player2.fighter.id) {
+// randomly generate the computer selected fighter
+function cpuSelectedFighter() {
+  gameState.player2.fighter = randomFighter(gameState.currentVersionFighters);
+  console.log('CPU Selected', gameState.player2.fighter.id);
+}
+
+function takeTurn(event) {
+  //refactored takeTurn function calls the functions that get player1 and player2 fighters
+  //contains the logic that checks for a "draw" condition
+  //if no "draw" calls getWinner()
+  // userSelectedFighter(event);
+  cpuSelectedFighter();
+
+  var player1Fighter = gameState.player1.fighter;
+  var player2Fighter = gameState.player2.fighter.id;
+
+  if (player1Fighter === player2Fighter) {
     tagline.innerText = "It's a Draw!";
     //no points!
-    displayFightResults();
+
     //reset icons
+    displayFightResults();
   } else {
-    console.log(
-      'Human Fighter',
-      gameState.player1.fighter,
-      'cpu Fighter',
-      gameState.player2.fighter.id
-    );
     getWinner();
   }
 }
 
-function randomFighter(array) {
-  var randomIndex = Math.floor(Math.random() * array.length);
-  return array[randomIndex];
-}
-
 function getWinner() {
-  if (
-    (gameState.player1.fighter === 'rock' &&
-      gameState.player2.fighter.id === 'scissors') || //End rock
-    (gameState.player1.fighter === 'rock' &&
-      gameState.player2.fighter.id === 'cowboyBoots') ||
-    (gameState.player1.fighter === 'paper' &&
-      gameState.player2.fighter.id === 'rock') || //End paper
-    (gameState.player1.fighter === 'paper' &&
-      gameState.player2.fighter.id === 'cowboyHat') ||
-    (gameState.player1.fighter === 'scissors' &&
-      gameState.player2.fighter.id === 'paper') ||
-    (gameState.player1.fighter === 'scissors' &&
-      gameState.player2.fighter.id === 'cowboyBoots') ||
-    (gameState.player1.fighter === 'cowboyBoots' &&
-      gameState.player2.fighter.id === 'paper') ||
-    (gameState.player1.fighter === 'cowboyBoots' &&
-      gameState.player2.fighter.id === 'cowboyHat') ||
-    (gameState.player1.fighter === 'cowboyHat' &&
-      gameState.player2.fighter.id === 'scissors') ||
-    (gameState.player1.fighter === 'cowboyHat' &&
-      gameState.player2.fighter.id === 'rock')
-  ) {
-    gameState.player1.wins = gameState.player1.wins + 1;
-    humanScore.innerText = gameState.player1.wins;
-    console.log('gameState.player1.wins', gameState.player1.wins);
-    tagline.innerText = 'Human wins!';
+  //mentor suggested simplifying my game logic.
+  // the array following each fighter contains who it can defeat
+  // when player1Fighter is selected the logic checks to see if the array hold the player2 fighter - if yes, player1 wins, if no player2 wins
+  var whoWinsLogic = {
+    rock: ['scissors', 'cowboyBoots'],
+    paper: ['rock', 'cowboyHat'],
+    scissors: ['paper', 'cowboyBoots'],
+    cowboyBoots: ['paper', 'cowboyHat'],
+    cowboyHat: ['scissors', 'rock'],
+  };
+  var player1Fighter = gameState.player1.fighter;
+  var player2Fighter = gameState.player2.fighter.id;
+
+  if (whoWinsLogic[player1Fighter].includes(player2Fighter)) {
+    gameState.player1.wins++;
+    humanScore.innerText = `Wins: ${gameState.player1.wins}`;
+    tagline.innerText = `You Won! ${player1Fighter.toUpperCase()} beats ${player2Fighter.toUpperCase()}.`;
   } else {
-    //update winner's score
-    gameState.player2.wins = gameState.player2.wins + 1;
-    cpuScore.innerText = gameState.player2.wins;
-    console.log('gameState.player2.wins', gameState.player2.wins);
-    //update the DOM - playerInfo
-    tagline.innerHTML = 'Computer Wins!';
+    gameState.player2.wins++;
+    cpuScore.innerText = `Wins: ${gameState.player2.wins}`;
+    tagline.innerText = `You Lost. ${player1Fighter.toUpperCase()} loses to ${player2Fighter.toUpperCase()}`;
   }
   displayFightResults();
 }
@@ -196,6 +194,7 @@ function displayFightResults() {
   humanFighter.classList.remove('hidden');
   cpuFighter.classList.remove('hidden');
 
+  // save the battleGround.innerHTML state
   battleGroundStatus = battleGround.innerHTML;
 
   // Construct the innerHTML content
@@ -210,10 +209,14 @@ function displayFightResults() {
     </div>
   `;
 
+  //sets the innerHTML to show the fight results!
   battleGround.innerHTML = newHTML;
 
-  takeTurnTimeOut = setTimeout(() => {
+  takeTurnTimeOut = setTimeout(function () {
+    //now we use the battleGroundStatus variable that we set before we inserted the newHTML to reset our battleGround.innerHTML to what it was prior to newHTML
     battleGround.innerHTML = battleGroundStatus;
+    //this gameFighters = freshens the querySelector.  Bret looked at this with me.  Talked about the fact that the nodeList was updating but we weren't seeing it on the DOM.
+    //We were specifically looking at toggling hidden from the game fighters.  Working on the nodeList, not working on the DOM
     gameFighters = document.querySelectorAll('.game-fighter');
 
     tagline.innerText = 'Choose Your Fighter!';
@@ -253,4 +256,10 @@ function hideFighters() {
   for (var i = 0; i < gameFighters.length; i++) {
     gameFighters[i].classList.add('hidden');
   }
+}
+
+//ramdomly generate
+function randomFighter(array) {
+  var randomIndex = Math.floor(Math.random() * array.length);
+  return array[randomIndex];
 }
