@@ -26,7 +26,6 @@ changeGameBtn.addEventListener('click', changeGame);
 battleGround.addEventListener('click', function (event) {
   if (event.target.classList.contains('game-fighter')) {
     gameState.player1.fighter = event.target.id;
-    console.log('human fighter', gameState.player1.fighter);
     takeTurn();
   }
 });
@@ -81,8 +80,6 @@ function createGame(gameChoice) {
 }
 
 function displayUserScores(gameState) {
-  // Set innerHTML for player1 and player2
-  // moved here to its own function - more modular, DRY?
   document.querySelector(
     '#humanWon'
   ).textContent = `Wins: ${gameState.player1.wins}`;
@@ -94,14 +91,12 @@ function displayUserScores(gameState) {
 function getFightersByVersion(fighters, version) {
   var choosenFighters = [];
   for (var i = 0; i < fighters.length; i++) {
-    //use bracket notation here for version
     if (fighters[i][version]) choosenFighters.push(fighters[i]);
   }
   return choosenFighters;
 }
 
 function loadClassic() {
-  console.log('Classic Button Clicked!');
   gameState.version = 'classic';
   gameState.currentVersionFighters = getFightersByVersion(
     gameState.fighters,
@@ -111,11 +106,9 @@ function loadClassic() {
   tagline.innerText = 'Choose Your Fighter!';
   toggleClass(mainViewElements);
   displayFighters();
-  console.log({ gameState });
 }
 
 function loadDifficult() {
-  console.log('Difficult Button Clicked!');
   gameState.version = 'difficult';
   gameState.currentVersionFighters = getFightersByVersion(
     gameState.fighters,
@@ -127,24 +120,11 @@ function loadDifficult() {
   displayFighters();
 }
 
-//moved this to the event listener on battleGround
-// function userSelectedFighter(event) {
-//on click - save fighter name that the user selected
-//   gameState.player1.fighter = event.target.id;
-//   console.log('Human Selected', gameState.player1.fighter);
-// }
-
-// randomly generate the computer selected fighter
 function cpuSelectedFighter() {
   gameState.player2.fighter = randomFighter(gameState.currentVersionFighters);
-  console.log('CPU Selected', gameState.player2.fighter.id);
 }
 
 function takeTurn(event) {
-  //refactored takeTurn function calls the functions that get player1 and player2 fighters
-  //contains the logic that checks for a "draw" condition
-  //if no "draw" calls getWinner()
-  // userSelectedFighter(event);
   cpuSelectedFighter();
 
   var player1Fighter = gameState.player1.fighter;
@@ -152,9 +132,7 @@ function takeTurn(event) {
 
   if (player1Fighter === player2Fighter) {
     tagline.innerText = "It's a Draw!";
-    //no points!
 
-    //reset icons
     displayFightResults();
   } else {
     getWinner();
@@ -162,9 +140,6 @@ function takeTurn(event) {
 }
 
 function getWinner() {
-  //mentor suggested simplifying my game logic.
-  // the array following each fighter contains who it can defeat
-  // when player1Fighter is selected the logic checks to see if the array hold the player2 fighter - if yes, player1 wins, if no player2 wins
   var whoWinsLogic = {
     rock: ['scissors', 'cowboyBoots'],
     paper: ['rock', 'cowboyHat'],
@@ -194,10 +169,8 @@ function displayFightResults() {
   humanFighter.classList.remove('hidden');
   cpuFighter.classList.remove('hidden');
 
-  // save the battleGround.innerHTML state
   battleGroundStatus = battleGround.innerHTML;
 
-  // Construct the innerHTML content
   var newHTML = `
     <div class="display-fight-results">
       <div class="fighter-container">
@@ -209,28 +182,18 @@ function displayFightResults() {
     </div>
   `;
 
-  //sets the innerHTML to show the fight results!
   battleGround.innerHTML = newHTML;
 
   takeTurnTimeOut = setTimeout(function () {
-    //now we use the battleGroundStatus variable that we set before we inserted the newHTML to reset our battleGround.innerHTML to what it was prior to newHTML
     battleGround.innerHTML = battleGroundStatus;
-    //this gameFighters = freshens the querySelector.  Bret looked at this with me.  Talked about the fact that the nodeList was updating but we weren't seeing it on the DOM.
-    //We were specifically looking at toggling hidden from the game fighters.  Working on the nodeList, not working on the DOM
     gameFighters = document.querySelectorAll('.game-fighter');
-
     tagline.innerText = 'Choose Your Fighter!';
   }, 3000);
 }
 
 function changeGame() {
-  console.log('Change Game was Clicked');
-  //turns off the timer
   clearTimeout(takeTurnTimeOut);
-  //updates the tagline
   tagline.innerText = 'Choose Your Game!';
-  //turns the main view back on
-  // hideFighters();
   toggleClass(mainViewElements);
   hideFighters();
 }
@@ -251,14 +214,14 @@ function displayFighters() {
   }
 }
 
-// hide fighters!
+// hide fighters
 function hideFighters() {
   for (var i = 0; i < gameFighters.length; i++) {
     gameFighters[i].classList.add('hidden');
   }
 }
 
-//ramdomly generate
+//ramdomly generate fighter
 function randomFighter(array) {
   var randomIndex = Math.floor(Math.random() * array.length);
   return array[randomIndex];
