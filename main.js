@@ -22,8 +22,14 @@ var changeGameBtn = document.querySelector('.change-game-btn');
 // Event Listeners👇
 chooseClassicBtn.addEventListener('click', loadClassic);
 chooseDifficultBtn.addEventListener('click', loadDifficult);
-battleGround.addEventListener('click', takeTurn);
 changeGameBtn.addEventListener('click', changeGame);
+battleGround.addEventListener('click', function (event) {
+  if (event.target.classList.contains('game-fighter')) {
+    gameState.player1.fighter = event.target.id;
+    console.log('human fighter', gameState.player1.fighter);
+    takeTurn();
+  }
+});
 
 // Global Variables👇
 var gameState;
@@ -78,11 +84,11 @@ function displayUserScores(gameState) {
   // Set innerHTML for player1 and player2
   // moved here to its own function - more modular, DRY?
   document.querySelector(
-    '.user-human .show-score'
-  ).innerHTML = `Wins: ${gameState.player1.wins}`;
+    '#humanWon'
+  ).textContent = `Wins: ${gameState.player1.wins}`;
   document.querySelector(
-    '.user-cpu .show-score'
-  ).innerHTML = `Wins: ${gameState.player2.wins}`;
+    '#cpuWon'
+  ).textContent = `Wins: ${gameState.player2.wins}`;
 }
 
 function getFightersByVersion(fighters, version) {
@@ -121,11 +127,12 @@ function loadDifficult() {
   displayFighters();
 }
 
+//moved this to the event listener on battleGround
+// function userSelectedFighter(event) {
 //on click - save fighter name that the user selected
-function userSelectedFighter(event) {
-  gameState.player1.fighter = event.target.id;
-  console.log('Human Selected', gameState.player1.fighter);
-}
+//   gameState.player1.fighter = event.target.id;
+//   console.log('Human Selected', gameState.player1.fighter);
+// }
 
 // randomly generate the computer selected fighter
 function cpuSelectedFighter() {
@@ -137,7 +144,7 @@ function takeTurn(event) {
   //refactored takeTurn function calls the functions that get player1 and player2 fighters
   //contains the logic that checks for a "draw" condition
   //if no "draw" calls getWinner()
-  userSelectedFighter(event);
+  // userSelectedFighter(event);
   cpuSelectedFighter();
 
   var player1Fighter = gameState.player1.fighter;
@@ -170,12 +177,12 @@ function getWinner() {
 
   if (whoWinsLogic[player1Fighter].includes(player2Fighter)) {
     gameState.player1.wins++;
-    humanScore.innerText = gameState.player1.wins;
-    tagline.innerText = 'Human Wins!';
+    humanScore.innerText = `Wins: ${gameState.player1.wins}`;
+    tagline.innerText = `You Won! ${player1Fighter.toUpperCase()} beats ${player2Fighter.toUpperCase()}.`;
   } else {
     gameState.player2.wins++;
-    cpuScore.innerText = gameState.player2.wins;
-    tagline.innerText = 'Computer Wins!';
+    cpuScore.innerText = `Wins: ${gameState.player2.wins}`;
+    tagline.innerText = `You Lost. ${player1Fighter.toUpperCase()} loses to ${player2Fighter.toUpperCase()}`;
   }
   displayFightResults();
 }
@@ -205,7 +212,7 @@ function displayFightResults() {
   //sets the innerHTML to show the fight results!
   battleGround.innerHTML = newHTML;
 
-  takeTurnTimeOut = setTimeout(() => {
+  takeTurnTimeOut = setTimeout(function () {
     //now we use the battleGroundStatus variable that we set before we inserted the newHTML to reset our battleGround.innerHTML to what it was prior to newHTML
     battleGround.innerHTML = battleGroundStatus;
     //this gameFighters = freshens the querySelector.  Bret looked at this with me.  Talked about the fact that the nodeList was updating but we weren't seeing it on the DOM.
