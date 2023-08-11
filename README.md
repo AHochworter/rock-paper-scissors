@@ -6,11 +6,8 @@ Step into "Rock, Paper, Scissors: Wild West Showdown" – a fun twist on a class
 
 ### Installation Instructions:
 
-1. Go to your GitHub repo
-2. Settings -> Pages (left sidebar)
-3. Build and deployment source: deploy from a branch
-4. Branch: main /root
-5. Your project will be live at https://github.com/AHochworter/rock-paper-scissors
+1. View this on GitHub Pages
+2. [Rock-Paper-Scissors](https://ahochworter.github.io/rock-paper-scissors/)
 
 ### Preview of App:
 
